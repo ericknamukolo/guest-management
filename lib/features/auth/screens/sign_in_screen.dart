@@ -67,8 +67,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 validator: (val) {
                   if (val!.isEmpty) {
                     return 'This field is required';
-                  } else if (val.length < 6) {
-                    return 'Password should be 6 or more characters';
+                  } else if (val.length < 4) {
+                    return 'Password should be 4 or more characters';
                   }
                   return null;
                 },
@@ -96,7 +96,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     await context
                         .read<Auth>()
                         .signIn(
-                            email: email.text.trim(), password: pwd.text.trim())
+                          email: email.text.trim(),
+                          password: pwd.text.trim(),
+                          context: context,
+                        )
                         .then((_) => setState(() => isLoading = false));
                   } else {
                     setState(() => isAutoValidate = true);
