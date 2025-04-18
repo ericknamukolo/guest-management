@@ -30,7 +30,7 @@ class Requests {
   static Future<Map<String, dynamic>?> requestWrapper(
       {required Future<http.Response> fn, required int okStatusCode}) async {
     try {
-      var res = await fn.timeout(Duration(seconds: 10));
+      var res = await fn.timeout(Duration(seconds: 15));
 
       if (res.statusCode != okStatusCode) {
         throw Exception(

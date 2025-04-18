@@ -1,7 +1,9 @@
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'text.dart';
+
+late SharedPreferences prefs;
 
 class Toast {
   static void showToast(

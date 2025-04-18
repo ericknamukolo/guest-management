@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:guest_management/features/guests/screens/guests_screen.dart';
 import 'package:guest_management/utils/endpoints.dart';
+import 'package:guest_management/utils/local_storage.dart';
 import 'package:guest_management/utils/requests.dart';
 import 'package:guest_management/utils/utils.dart';
+
+import '../../../utils/navigation.dart';
 
 class Auth with ChangeNotifier {
   Future<void> signIn({
@@ -18,7 +22,9 @@ class Auth with ChangeNotifier {
             'password': password,
           },
           okStatusCode: 201);
-      logger.i(res);
+      await prefs.setString(LocalStorage.accessToken, res?['accessToken']);
+      Navigation.go(
+          screen: const GuestsScreen(), context: context, replace: true);
     } catch (e) {
       Toast.showToast(message: e.toString(), context: context);
     }
