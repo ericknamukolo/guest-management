@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:guest_management/utils/local_storage.dart';
+import 'package:guest_management/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
 class Requests {
@@ -12,7 +14,10 @@ class Requests {
   static Future<Map<String, dynamic>?> get(
       {required String url, int okStatusCode = 200}) async {
     return await requestWrapper(
-      fn: http.get(Uri.parse(url), headers: headers),
+      fn: http.get(Uri.parse(url), headers: {
+        ...headers,
+        'Authorization': 'Bearer ${prefs.getString(LocalStorage.accessToken)}'
+      }),
       okStatusCode: okStatusCode,
     );
   }
