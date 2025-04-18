@@ -1,16 +1,30 @@
-# guest_management
+# 🚀 Flutter App Setup Guide (Windows)
 
-A new Flutter project.
+Follow these steps to run this Flutter app on **Windows**.
 
-## Getting Started
+## 📋 Prerequisites
 
-This project is a starting point for a Flutter application.
+1. **Flutter SDK**  
+   - Download the latest stable version from [flutter.dev](https://docs.flutter.dev/get-started/install/windows).  
+   - Extract the zip file to `C:\src\flutter` (or your preferred location).  
+   - Add Flutter to your `PATH`:  
+     1. Search for "Environment Variables" in Windows.  
+     2. Under **System variables**, edit `Path` and add:  
 
-A few resources to get you started if this is your first Flutter project:
+        ```
+        C:\src\flutter\bin
+        ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. **Android Studio**  
+   - Install [Android Studio](https://developer.android.com/studio).  
+   - During setup, ensure **Android SDK** and **Android Emulator** are selected.  
+3. **Git**  
+   - Download and install [Git for Windows](https://git-scm.com/download/win).  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ⚙️ Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/repo-name.git
+cd repo-name
