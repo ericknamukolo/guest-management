@@ -8,7 +8,8 @@ late SharedPreferences prefs;
 class Toast {
   static void showToast(
       {required String message, required BuildContext context}) {
-    String errMessage = message.replaceAll('Exception:', '');
+    String errMessage =
+        message.replaceAll('Exception:', '').replaceAll('Socket:', '');
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
