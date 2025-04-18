@@ -40,7 +40,7 @@ class GuestCard extends StatelessWidget {
             children: [
               Text('${guest.firstName} ${guest.lastName}',
                   style: kTitleTextStyle),
-              Text('${guest.lengthOfStay} Day Stay',
+              Text('${guest.lengthOfStay}-day stay',
                   style: kBodyTextStyle.copyWith(fontWeight: FontWeight.w500)),
             ],
           ),

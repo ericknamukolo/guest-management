@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guest_management/features/auth/providers/auth.dart';
 import 'package:guest_management/features/guests/providers/guests.dart';
 import 'package:guest_management/features/guests/widgets/guest_card.dart';
 import 'package:guest_management/utils/colors.dart';
@@ -36,24 +37,50 @@ class _GuestsScreenState extends State<GuestsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Guets', style: kTitleTextStyle),
+        title: Text('Guests', style: kTitleTextStyle),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: TextButton(
+                onPressed: () => Auth.logOut(context),
+                child: Text('Logout',
+                    style: kBodyTitleTextStyle.copyWith(color: kPrimaryColor))),
+          )
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(15.0),
         child: isLoading
             ? LoadingIndicator()
             : Consumer<Guests>(builder: (_, val, __) {
-                return RefreshIndicator(
-                  onRefresh: getGuests,
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => SizedBox(height: 15),
-                    itemBuilder: (_, i) {
-                      return GuestCard(guest: val.guests[i]);
-                    },
-                    itemCount: val.guests.length,
-                    shrinkWrap: true,
-                  ),
-                );
+                return val.guests.isEmpty
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 15,
+                          children: [
+                            Text('Failed to fetch guests',
+                                style: kBodyTitleTextStyle.copyWith(
+                                    color: kGreyColor)),
+                            TextButton(
+                                onPressed: getGuests,
+                                child: Text('Retry',
+                                    style: kBodyTitleTextStyle.copyWith(
+                                        color: kPrimaryColor)))
+                          ],
+                        ),
+                      )
+                    : RefreshIndicator(
+                        onRefresh: getGuests,
+                        child: ListView.separated(
+                          separatorBuilder: (_, __) => SizedBox(height: 15),
+                          itemBuilder: (_, i) {
+                            return GuestCard(guest: val.guests[i]);
+                          },
+                          itemCount: val.guests.length,
+                          shrinkWrap: true,
+                        ),
+                      );
               }),
       ),
     );

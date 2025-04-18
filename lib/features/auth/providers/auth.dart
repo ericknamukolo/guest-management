@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guest_management/features/auth/screens/splash_screen.dart';
 import 'package:guest_management/features/guests/screens/guests_screen.dart';
 import 'package:guest_management/utils/endpoints.dart';
 import 'package:guest_management/utils/local_storage.dart';
@@ -28,5 +29,12 @@ class Auth with ChangeNotifier {
     } catch (e) {
       Toast.showToast(message: e.toString(), context: context);
     }
+  }
+
+  static Future<void> logOut(BuildContext context) async {
+    await prefs.clear();
+    Navigation.go(
+        screen: const SplashScreen(), context: context, replace: true);
+    Toast.showToast(message: 'Logged out successfully', context: context);
   }
 }
