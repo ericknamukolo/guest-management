@@ -16,13 +16,14 @@ class Auth with ChangeNotifier {
   }) async {
     try {
       final res = await Requests.post(
-          url: Endpoints.signIn,
-          body: {
-            'strategy': 'local',
-            'email': email,
-            'password': password,
-          },
-          okStatusCode: 201);
+        url: Endpoints.signIn,
+        body: {
+          'strategy': 'local',
+          'email': email,
+          'password': password,
+        },
+        okStatusCode: 201,
+      );
       await prefs.setString(LocalStorage.accessToken, res?['accessToken']);
       Navigation.go(
           screen: const GuestsScreen(), context: context, replace: true);
