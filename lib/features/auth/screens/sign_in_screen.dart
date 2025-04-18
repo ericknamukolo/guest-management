@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:guest_management/features/auth/providers/auth.dart';
 import 'package:guest_management/features/auth/widgets/custom_text_field.dart';
 import 'package:guest_management/utils/colors.dart';
 import 'package:guest_management/utils/text.dart';
 import 'package:guest_management/widgets/custom_button.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -17,6 +19,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController pwd = TextEditingController();
   bool isAutoValidate = false;
   bool isHidden = true;
+  bool isLoading = false;
 
   bool isValidEmail(String email) {
     RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -83,16 +86,23 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               CustomButton(
-                  btnText: 'Sign In',
-                  click: () {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    bool isValid = formKey.currentState!.validate();
-                    if (isValid) {
-                      ////
-                    } else {
-                      setState(() => isAutoValidate = true);
-                    }
-                  })
+                btnText: 'Sign In',
+                isLoading: isLoading,
+                click: () async {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  bool isValid = formKey.currentState!.validate();
+                  if (isValid) {
+                    setState(() => isLoading = true);
+                    await context
+                        .read<Auth>()
+                        .signIn(
+                            email: email.text.trim(), password: pwd.text.trim())
+                        .then((_) => setState(() => isLoading = false));
+                  } else {
+                    setState(() => isAutoValidate = true);
+                  }
+                },
+              )
             ],
           ),
         ),

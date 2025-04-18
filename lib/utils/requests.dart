@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:guest_management/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
 class Requests {
@@ -24,7 +25,10 @@ class Requests {
       {required Future<http.Response> fn}) async {
     try {
       var res = await fn.timeout(Duration(seconds: 10));
-      if (res.statusCode != 200) return null;
+
+      if (res.statusCode != 200) {
+        throw Exception(json.decode(res.body)['message']);
+      }
 
       return json.decode(res.body);
     } on TimeoutException {
